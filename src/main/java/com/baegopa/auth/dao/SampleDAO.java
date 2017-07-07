@@ -10,6 +10,6 @@ public class SampleDAO extends AbstractDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, String>> selectUserList(Map<String, String> map) {
-		return (List<Map<String, String>>) selectList("selectUserList", map); 
+		return (List<Map<String, String>>) selectList("user.selectUserList", map); 
 	}
 }
