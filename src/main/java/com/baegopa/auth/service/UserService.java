@@ -1,8 +1,9 @@
 package com.baegopa.auth.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-	public List<Map<String, String>> selectUserList(Map<String, String> map) throws Exception;
+	public List<HashMap> selectUserList() throws Exception;
 }

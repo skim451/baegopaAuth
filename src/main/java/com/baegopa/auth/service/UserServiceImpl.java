@@ -1,5 +1,6 @@
 package com.baegopa.auth.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,10 @@ public class UserServiceImpl implements UserService{
 	@Resource(name="userDAO")
 	private UserDAO userDAO; 
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public List<Map<String, String>> selectUserList(Map<String, String> map) throws Exception {
-		return userDAO.selectUserList(map);
+	public List<HashMap> selectUserList() throws Exception {
+		return userDAO.selectUserList();
 	}
 	
 	

@@ -1,5 +1,6 @@
 package com.baegopa.auth.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baegopa.auth.service.UserService;
 
 @Controller
-public class TestController {
+public class UserController {
 	
 	@Autowired
 	@Resource(name="userService")
@@ -28,16 +29,10 @@ public class TestController {
 	
 	@ResponseBody
 	@RequestMapping(value="/userList")
-	public String userList(@RequestBody Map<String, String> body) throws Exception {
-		String retval = new String(); 
+	public List<HashMap> userList() throws Exception {
+
+		List<HashMap> userMapList = userService.selectUserList();
 		
-		List<Map<String, String>> userMapList = userService.selectUserList(body);
-		
-		for(Map<String, String> userMap : userMapList) {
-			for(String key : userMap.keySet()) {
-				retval.concat(key + ", ");
-			}
-		}
-		return retval;
+		return userMapList;
 	}
 }
