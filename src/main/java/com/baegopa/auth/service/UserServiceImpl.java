@@ -7,17 +7,17 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.baegopa.auth.dao.SampleDAO;
+import com.baegopa.auth.dao.UserDAO;
 
-@Service("sampleService")
-public class SampleServiceImple implements SampleService{
+@Service("userService")
+public class UserServiceImpl implements UserService{
 	
-	@Resource(name="sampleDAO")
-	private SampleDAO sampleDAO; 
+	@Resource(name="userDAO")
+	private UserDAO userDAO; 
 
 	@Override
 	public List<Map<String, String>> selectUserList(Map<String, String> map) throws Exception {
-		return sampleDAO.selectUserList(map);
+		return userDAO.selectUserList(map);
 	}
 	
 	

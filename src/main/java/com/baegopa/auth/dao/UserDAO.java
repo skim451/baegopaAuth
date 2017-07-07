@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-@Repository("sampleDAO")
-public class SampleDAO extends AbstractDAO {
+@Repository("userDAO")
+public class UserDAO extends AbstractDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, String>> selectUserList(Map<String, String> map) {

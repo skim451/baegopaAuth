@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baegopa.auth.service.SampleService;
+import com.baegopa.auth.service.UserService;
 
 @Controller
 public class TestController {
 	
 	@Autowired
-	@Resource(name="sampleService")
-    private SampleService sampleService;
+	@Resource(name="userService")
+    private UserService userService;
 	
 	 
 	@RequestMapping(value="/")
@@ -31,7 +31,7 @@ public class TestController {
 	public String userList(@RequestBody Map<String, String> body) throws Exception {
 		String retval = new String(); 
 		
-		List<Map<String, String>> userMapList = sampleService.selectUserList(body);
+		List<Map<String, String>> userMapList = userService.selectUserList(body);
 		
 		for(Map<String, String> userMap : userMapList) {
 			for(String key : userMap.keySet()) {
