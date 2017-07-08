@@ -15,18 +15,15 @@ public class UserDAO extends AbstractDAO {
 		return selectList("user.selectUserList"); 
 	}
 	
-	@SuppressWarnings("unchecked")
-	public HashMap<String, Object> insertUser(HashMap<String, Object> map) {
-		return (HashMap<String, Object>) insert("user.insertUser", map);
+	public int insertUser(HashMap<String, Object> map) {
+		return (int) insert("user.insertUser", map);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public HashMap<String, Object> updateUser(HashMap<String, Object> map) {
-		return (HashMap<String, Object>) update("user.updateUser", map); 
+	public UserDTO updateUser(HashMap<String, Object> map) {
+		return (UserDTO) update("user.updateUser", map); 
 	}
 	
-	@SuppressWarnings("unchecked")
-	public HashMap<String, Object> deleteUser(HashMap<String, Object> map) {
-		return (HashMap<String, Object>) update("user.deleteUser", map);
+	public UserDTO deleteUser(HashMap<String, Object> map) {
+		return (UserDTO) update("user.deleteUser", map);
 	}
 }

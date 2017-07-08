@@ -1,0 +1,9 @@
+spring:
+  profiles: default
+
+  datasource:
+     driver-class-name: "com.mysql.jdbc.Driver"
+     url: "jdbc:mysql://webdevdbinstance.c09mbepfgdal.ap-northeast-2.rds.amazonaws.com/baegopa_main?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8"
+     username: 'webdevroot'
+     password: 'q1w2e3r4t5'
+     

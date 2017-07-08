@@ -3,14 +3,20 @@ package com.baegopa.auth.dto;
 import java.sql.Timestamp;
 
 public class UserDTO {
-	public UserDTO() {}
-	
 	private Long id;
 	private String email;
 	private String password;
-	private String useYn;
+	private String newPassword; 
+	private char snsType; 
+	private char useYn;
+	private Timestamp recommendedTime; 
+	private char recommendedYn; 
+	private int token;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
+	private Timestamp authedAt;
+	
+	public UserDTO() { } 
 	
 	public Long getId() {
 		return id;
@@ -30,12 +36,6 @@ public class UserDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getUseYn() {
-		return useYn;
-	}
-	public void setUseYn(String useYn) {
-		this.useYn = useYn;
-	}
 	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
@@ -47,5 +47,59 @@ public class UserDTO {
 	}
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public String getNewPassword() {
+		return newPassword;
+	}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public char getSnsType() {
+		return snsType;
+	}
+
+	public void setSnsType(char snsType) {
+		this.snsType = snsType;
+	}
+
+	public Timestamp getRecommendedTime() {
+		return recommendedTime;
+	}
+
+	public void setRecommendedTime(Timestamp recommendedTime) {
+		this.recommendedTime = recommendedTime;
+	}
+
+	public char getRecommendedYn() {
+		return recommendedYn;
+	}
+
+	public void setRecommendedYn(char recommendedYn) {
+		this.recommendedYn = recommendedYn;
+	}
+
+	public int getToken() {
+		return token;
+	}
+
+	public void setToken(int token) {
+		this.token = token;
+	}
+
+	public Timestamp getAuthedAt() {
+		return authedAt;
+	}
+
+	public void setAuthedAt(Timestamp authedAt) {
+		this.authedAt = authedAt;
+	}
+
+	public void setUseYn(char useYn) {
+		this.useYn = useYn;
+	}
+
+	public char getUseYn() {
+		return useYn;
 	}
 }
