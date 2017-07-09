@@ -1,6 +1,5 @@
 package com.baegopa.auth.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -15,15 +14,15 @@ public class UserDAO extends AbstractDAO {
 		return selectList("user.selectUserList"); 
 	}
 	
-	public int insertUser(HashMap<String, Object> map) {
-		return (int) insert("user.insertUser", map);
+	public int insertUser(UserDTO user) {
+		return (int) insert("user.insertUser", user);
 	}
 	
-	public UserDTO updateUser(HashMap<String, Object> map) {
-		return (UserDTO) update("user.updateUser", map); 
+	public int updateUser(UserDTO user) {
+		return (int) update("user.updateUser", user); 
 	}
 	
-	public UserDTO deleteUser(HashMap<String, Object> map) {
-		return (UserDTO) update("user.deleteUser", map);
+	public int deleteUser(UserDTO user) {
+		return (int) update("user.deleteUser", user);
 	}
 }

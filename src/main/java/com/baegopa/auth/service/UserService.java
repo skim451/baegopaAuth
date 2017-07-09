@@ -1,6 +1,5 @@
 package com.baegopa.auth.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +19,18 @@ public class UserService{
 	}
 
 	
-	public int insertUser(HashMap<String, Object> map) {
-		return userDAO.insertUser(map);
+	public int insertUser(UserDTO user) {
+		return userDAO.insertUser(user);
 	}
 
-	public UserDTO updateUser(HashMap map) {
+	public int updateUser(UserDTO user) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
-	public UserDTO deleteUser(HashMap map) {
+	public int deleteUser(UserDTO user) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 	
 	

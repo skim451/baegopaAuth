@@ -1,6 +1,5 @@
 package com.baegopa.auth.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,22 +37,22 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value="/", method=RequestMethod.POST)
-	public int insertUser(@RequestBody HashMap map) {
-		int insertUserResponse = userService.insertUser(map); 
+	public int insertUser(@RequestBody UserDTO user) {
+		int insertUserResponse = userService.insertUser(user); 
 		return insertUserResponse;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/", method=RequestMethod.PUT) 
-	public UserDTO updateUser(@RequestBody HashMap map) {
-		UserDTO updateUserResponse = userService.updateUser(map); 
+	public int updateUser(@RequestBody UserDTO user) {
+		int updateUserResponse = userService.updateUser(user); 
 		return updateUserResponse; 
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/", method=RequestMethod.DELETE) 
-	public UserDTO deleteUser(@RequestBody HashMap map) {
-		UserDTO updateUserResponse = userService.deleteUser(map);
+	public int deleteUser(@RequestBody UserDTO user) {
+		int updateUserResponse = userService.deleteUser(user);
 		return updateUserResponse; 
 	}
 }
