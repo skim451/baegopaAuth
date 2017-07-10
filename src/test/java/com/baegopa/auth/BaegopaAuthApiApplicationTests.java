@@ -27,8 +27,8 @@ public class BaegopaAuthApiApplicationTests {
 	@Test
 	public void testInsertUser() {
 		UserDTO newUser = new UserDTO(); 
-		newUser.setEmail("hi@world.com");
-		newUser.setPassword("12345");
+		newUser.setEmail("123124@alsdkljf.com");
+		newUser.setPassword("48293845");
 		int body = this.restTemplate.postForObject("/users/", newUser, Integer.class);
 		System.out.println(body);
 	}

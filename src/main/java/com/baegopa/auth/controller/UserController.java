@@ -19,14 +19,14 @@ public class UserController {
 	@Autowired
     private UserService userService;
 	
-//	@ResponseBody
-//	@RequestMapping(value="/",method =RequestMethod.GET) 
-//	public UserDTO test() {
-//		UserDTO user = new UserDTO(); 
-//		user.setId((long) 0);
-//		user.setEmail("hello@world.com");
-//		return user; 
-//	}
+	@ResponseBody
+	@RequestMapping(value="/hello",method =RequestMethod.GET) 
+	public UserDTO test() {
+		UserDTO user = new UserDTO(); 
+		user.setId((long) 0);
+		user.setEmail("hello@world.com");
+		return user; 
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/", method=RequestMethod.GET)
