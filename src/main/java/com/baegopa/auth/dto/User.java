@@ -2,7 +2,7 @@ package com.baegopa.auth.dto;
 
 import java.sql.Timestamp;
 
-public class UserDTO {
+public class User {
 	private Long id;
 	private String email;
 	private String password;
@@ -16,7 +16,7 @@ public class UserDTO {
 	private Timestamp updatedAt;
 	private Timestamp authedAt;
 	
-	public UserDTO() { } 
+	public User() { } 
 	
 	public Long getId() {
 		return id;

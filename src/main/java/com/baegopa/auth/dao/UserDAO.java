@@ -4,25 +4,25 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.baegopa.auth.dto.UserDTO;
+import com.baegopa.auth.dto.User;
 
 @Repository("userDAO")
 public class UserDAO extends AbstractDAO {
 	
 	@SuppressWarnings("unchecked")
-	public List<UserDTO> selectUserList() {
-		return selectList("user.selectUserList"); 
+	public List<User> selectUserList(int pageNum) {
+		return selectList("user.selectUserList", pageNum); 
 	}
 	
-	public int insertUser(UserDTO user) {
+	public int insertUser(User user) {
 		return (int) insert("user.insertUser", user);
 	}
 	
-	public int updateUser(UserDTO user) {
+	public int updateUser(User user) {
 		return (int) update("user.updateUser", user); 
 	}
 	
-	public int deleteUser(UserDTO user) {
+	public int deleteUser(User user) {
 		return (int) update("user.deleteUser", user);
 	}
 }

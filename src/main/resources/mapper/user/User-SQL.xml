@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
-	<select id="selectUserList" resultType="com.baegopa.auth.dto.UserDTO">
+	<select id="selectUserList" parameterType="int" resultType="com.baegopa.auth.dto.User">
 		<![CDATA[
 			SELECT
     			id, 
@@ -14,11 +14,14 @@
     			updated_at
 			FROM
    				users  
+   			WHERE
+   				id >= #{pageNum} * 25 AND
+   				id <  (#{pageNum}+1) * 25
 			ORDER BY id ASC
 		]]>
 	</select>
 	
-	<insert id="insertUser" parameterType="com.baegopa.auth.dto.UserDTO">
+	<insert id="insertUser" parameterType="com.baegopa.auth.dto.User">
 	    <![CDATA[
 	        INSERT INTO users
 	        (
@@ -42,23 +45,23 @@
 	    ]]>
 	</insert>
 	
-	<update id="updateUser" parameterType="com.baegopa.auth.dto.UserDTO">
+	<update id="updateUser" parameterType="com.baegopa.auth.dto.User">
 	    <![CDATA[
 	        UPDATE users
 	        SET
 	            password = #{newPassword} 
 	        WHERE
-	            id = #{id} AND password = #{password}   
+	            email = #{email} AND password = #{password}   
 	    ]]>
 	</update>
 	
-	<update id="deleteUser" parameterType="com.baegopa.auth.dto.UserDTO"> 
+	<update id="deleteUser" parameterType="com.baegopa.auth.dto.User"> 
 		<![CDATA[
 	        UPDATE users
 	        SET
 	            use_yn = 'N'
 	        WHERE
-	            id = #{id} AND password = #{password}   
+	            email = #{email} AND password = #{password}   
 	    ]]>
 	</update>
 	

@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.baegopa.auth.dto.UserDTO;
+import com.baegopa.auth.dto.User;
 
 
 @RunWith(SpringRunner.class)
@@ -26,22 +26,28 @@ public class BaegopaAuthApiApplicationTests {
 
 //	@Test
 //	public void testInsertUser() {
-//		UserDTO newUser = new UserDTO(); 
-//		newUser.setEmail("qqqqqq@jfkjsd.com");
-//		newUser.setPassword("asdlkalkslfkgggg");
+//		User newUser = new User(); 
+//		newUser.setEmail("example@baegopa.com");
+//		newUser.setPassword("mypassword");
 //		int body = this.restTemplate.postForObject("/users/", newUser, Integer.class);
-//		System.out.println(body);
 //	}
 	
 	@Test
 	public void testUpdateUser() {
-		UserDTO user = new UserDTO(); 
-		user.setEmail("qqqqqq@jfkjsd.com");
-		user.setPassword("asdlkalkslfkgggg");
+		User user = new User(); 
+		user.setEmail("example@baegopa.com");
+		user.setPassword("mypassword");
 		user.setNewPassword("updatecomplete");
-		this.restTemplate.put("/users", user);
+		this.restTemplate.put("/users/", user);
 	}
-	
+//	
+//	@Test
+//	public void testDeleteUser() {
+//		Map<String, Object> user = new HashMap<>(); 
+//		user.put("email", "example@baegopa.com"); 
+//		user.put("password", "mypassword");
+//		this.restTemplate.delete("/users/", user);
+//	}
 	
 
 }
