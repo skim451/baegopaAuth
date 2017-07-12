@@ -24,13 +24,11 @@ public class UserService{
 	}
 
 	public int updateUser(UserDTO user) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDAO.updateUser(user);
 	}
 
 	public int deleteUser(UserDTO user) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDAO.deleteUser(user);
 	}
 	
 	

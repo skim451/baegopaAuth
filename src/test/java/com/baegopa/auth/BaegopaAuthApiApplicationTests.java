@@ -18,19 +18,28 @@ public class BaegopaAuthApiApplicationTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
-	@Test
-	public void testSelectUser() {
-		String body = this.restTemplate.getForObject("/users/", String.class);
-		System.out.println(body);
-	}
+//	@Test
+//	public void testSelectUser() {
+//		String body = this.restTemplate.getForObject("/users/", String.class);
+//		System.out.println(body);
+//	}
+
+//	@Test
+//	public void testInsertUser() {
+//		UserDTO newUser = new UserDTO(); 
+//		newUser.setEmail("qqqqqq@jfkjsd.com");
+//		newUser.setPassword("asdlkalkslfkgggg");
+//		int body = this.restTemplate.postForObject("/users/", newUser, Integer.class);
+//		System.out.println(body);
+//	}
 	
 	@Test
-	public void testInsertUser() {
-		UserDTO newUser = new UserDTO(); 
-		newUser.setEmail("123124@alsdkljf.com");
-		newUser.setPassword("48293845");
-		int body = this.restTemplate.postForObject("/users/", newUser, Integer.class);
-		System.out.println(body);
+	public void testUpdateUser() {
+		UserDTO user = new UserDTO(); 
+		user.setEmail("qqqqqq@jfkjsd.com");
+		user.setPassword("asdlkalkslfkgggg");
+		user.setNewPassword("updatecomplete");
+		this.restTemplate.put("/users", user);
 	}
 	
 	
