@@ -2,8 +2,13 @@ spring:
   profiles: default
 
   datasource:
-     driver-class-name: "com.mysql.cj.jdbc.Driver"
-     url: "jdbc:mysql://webdevdbinstance.c09mbepfgdal.ap-northeast-2.rds.amazonaws.com/baegopa_main?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false"
-     username: 'webdevroot'
-     password: 'q1w2e3r4t5'
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+    url: "jdbc:mysql://webdevdbinstance.c09mbepfgdal.ap-northeast-2.rds.amazonaws.com/baegopa_main?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false"
+    username: 'webdevroot'
+    password: 'q1w2e3r4t5'
      
+logging:
+  level:
+    com.baegopa.auth: DEBUG
+ 
+  
