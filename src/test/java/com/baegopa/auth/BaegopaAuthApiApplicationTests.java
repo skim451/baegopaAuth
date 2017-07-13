@@ -1,5 +1,8 @@
 package com.baegopa.auth;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.baegopa.auth.dto.User;
 
 
 @RunWith(SpringRunner.class)
@@ -32,22 +33,22 @@ public class BaegopaAuthApiApplicationTests {
 //		int body = this.restTemplate.postForObject("/users/", newUser, Integer.class);
 //	}
 	
-	@Test
-	public void testUpdateUser() {
-		User user = new User(); 
-		user.setEmail("example@baegopa.com");
-		user.setPassword("mypassword");
-		user.setNewPassword("updatecomplete");
-		this.restTemplate.put("/users/", user);
-	}
-//	
 //	@Test
-//	public void testDeleteUser() {
-//		Map<String, Object> user = new HashMap<>(); 
-//		user.put("email", "example@baegopa.com"); 
-//		user.put("password", "mypassword");
-//		this.restTemplate.delete("/users/", user);
+//	public void testUpdateUser() {
+//		User user = new User(); 
+//		user.setEmail("example@baegopa.com");
+//		user.setPassword("mypassword");
+//		user.setNewPassword("updatecomplete");
+//		this.restTemplate.put("/users/", user);
 //	}
+//	
+	@Test
+	public void testDeleteUser() {
+		Map<String, Object> user = new HashMap<>(); 
+		user.put("email", "example@baegopa.com"); 
+		user.put("password", "mypassword");
+		this.restTemplate.delete("/users/", user);
+	}
 	
 
 }

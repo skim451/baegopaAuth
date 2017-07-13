@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.baegopa.auth.BaegopaAuthApiApplication;
-
 @Component
 public class LoggerInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Logger logger = LoggerFactory.getLogger(LoggerInterceptor.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	
 	@Override
@@ -25,6 +23,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		if (logger.isDebugEnabled()) {
 			logger.debug("========================= START ============================");
 			logger.debug(" Request URI \t: " + request.getRequestURI());
+			logger.debug(" Request METHOD \t:" + request.getMethod());
 		}
 		
 		return super.preHandle(request, response, handler);

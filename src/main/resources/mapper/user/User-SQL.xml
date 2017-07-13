@@ -3,15 +3,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
-	<select id="selectUserList" parameterType="int" resultType="com.baegopa.auth.dto.User">
+	<select id="selectUser" parameterType="String" resultType="com.baegopa.auth.dto.User">
 		<![CDATA[
 			SELECT
-    			id, 
-    			email,
-    			password, 
-    			use_yn, 
-    			created_at, 
-    			updated_at
+    			id;
+				email;
+				password; 
+				sns-type; 
+				use_yn;
+				recommended_time; 
+				recommended_yn; 
+				private Timestamp createdAt;
+				private Timestamp updatedAt;
+			FROM
+   				users  
+   			WHERE
+   				email=#{email}
+		]]>
+	</select>
+	
+	<select id="selectUserListByPage" parameterType="int" resultType="com.baegopa.auth.dto.User">
+		<![CDATA[
+			SELECT
+    			id;
+				email;
+				password; 
+				sns-type; 
+				use_yn;
+				recommended_time; 
+				recommended_yn; 
+				private Timestamp createdAt;
+				private Timestamp updatedAt;
 			FROM
    				users  
    			WHERE

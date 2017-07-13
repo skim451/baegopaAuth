@@ -10,8 +10,12 @@ import com.baegopa.auth.dto.User;
 public class UserDAO extends AbstractDAO {
 	
 	@SuppressWarnings("unchecked")
-	public List<User> selectUserList(int pageNum) {
-		return selectList("user.selectUserList", pageNum); 
+	public List<User> selectUserListByPage(int pageNum) {
+		return selectList("user.selectUserListByPage", pageNum); 
+	}
+	
+	public User selectUser(String email) {
+		return (User) select("user.selectUser", email); 
 	}
 	
 	public int insertUser(User user) {

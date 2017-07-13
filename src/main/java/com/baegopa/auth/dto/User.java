@@ -1,17 +1,21 @@
 package com.baegopa.auth.dto;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 
-public class User {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class User implements UserDetails {
+	//CustomFields
 	private Long id;
 	private String email;
-	private String password;
-	private String newPassword; 
+	private String password; 
 	private char snsType; 
 	private char useYn;
 	private Timestamp recommendedTime; 
 	private char recommendedYn; 
-	private int token;
+	private String token;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 	private Timestamp authedAt;
@@ -48,13 +52,6 @@ public class User {
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	public String getNewPassword() {
-		return newPassword;
-	}
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
 	public char getSnsType() {
 		return snsType;
 	}
@@ -79,14 +76,6 @@ public class User {
 		this.recommendedYn = recommendedYn;
 	}
 
-	public int getToken() {
-		return token;
-	}
-
-	public void setToken(int token) {
-		this.token = token;
-	}
-
 	public Timestamp getAuthedAt() {
 		return authedAt;
 	}
@@ -102,4 +91,49 @@ public class User {
 	public char getUseYn() {
 		return useYn;
 	}
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
 }

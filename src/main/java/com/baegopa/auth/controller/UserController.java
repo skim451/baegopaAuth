@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baegopa.auth.BaegopaAuthApiApplication;
+import com.baegopa.auth.dto.AuthResponse;
 import com.baegopa.auth.dto.User;
 import com.baegopa.auth.service.UserService;
 
@@ -22,16 +21,25 @@ public class UserController {
 	
 	@Autowired
     private UserService userService;
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@ResponseBody
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public List<User> userList(@RequestParam int pageNum) throws Exception{
-		List<User> userList = userService.selectUserList(pageNum);
+	public AuthResponse selectUser(@RequestBody User user){
+		AuthResponse response = new AuthResponse();
+		String email = user.getEmail(); 
+		response.setEmail(email);
+		
+		
+		return response;
+	}
+	
+	@RequestMapping(value="/page", method=RequestMethod.GET)
+	public List<User> selectUserListByPage(@RequestParam int pageNum) throws Exception{
+		logger.debug("Controller - userList");
+		List<User> userList = userService.selectUserListByPage(pageNum);
 		return userList;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	public int insertUser(@RequestBody User user) {
 		int insertUserResponse = userService.insertUser(user); 
@@ -43,7 +51,7 @@ public class UserController {
 		userService.updateUser(user); 
 	}
 	
-	@RequestMapping(value="/", method=RequestMethod.DELETE) 
+	@RequestMapping(value="/d", method=RequestMethod.DELETE) 
 	public void deleteUser(@RequestParam User user) {
 		System.out.println("deleteUser called.");
 		System.out.println("this is controller: " + user.getEmail() + ",  " + user.getPassword());
