@@ -6,7 +6,11 @@ spring:
     url: "jdbc:mysql://webdevdbinstance.c09mbepfgdal.ap-northeast-2.rds.amazonaws.com/baegopa_main?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false"
     username: 'webdevroot'
     password: 'q1w2e3r4t5'
-     
+
+multipart:
+  maxFileSiz: 1MB
+  maxRequestSize: 1MB
+ 
 logging:
   level:
     com.baegopa.auth: DEBUG

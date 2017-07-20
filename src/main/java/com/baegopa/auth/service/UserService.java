@@ -2,28 +2,62 @@ package com.baegopa.auth.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.baegopa.auth.common.AuthenticationToken;
+import com.baegopa.auth.common.BCrypt;
+import com.baegopa.auth.dao.UserAuthDAO;
 import com.baegopa.auth.dao.UserDAO;
+import com.baegopa.auth.dto.AuthRequest;
+import com.baegopa.auth.dto.CommonResponse;
 import com.baegopa.auth.dto.User;
+import com.baegopa.auth.dto.UserAuth;
 
 @Service("userService")
-public class UserService implements UserDetailsService{
-	
+public class UserService{
 	@Autowired
 	private UserDAO userDAO; 
-	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	@Autowired
+	private UserAuthDAO userAuthDAO;
 	
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	public CommonResponse login(AuthRequest request) {
+		CommonResponse response = new CommonResponse(); 
+		String token;
+		String email = request.getEmail(); 
+		String userPassword = request.getPassword(); 
 		
-		return null;
+		logger.debug("login request for :" + email);
+		
+		User user = userDAO.selectUser(email); 
+		if(user != null) {
+			String dbPassword = user.getPassword(); 
+			// if password is correct
+			if ( BCrypt.checkpw(userPassword, dbPassword)) {
+				token = AuthenticationToken.generateToken(); 
+				UserAuth auth = new UserAuth();
+				auth.setEmail(email);
+				auth.setToken(BCrypt.hashpw(token, BCrypt.gensalt()));
+				userAuthDAO.insertUserAuth(auth);
+				response.setStatus(CommonResponse.SUCC);
+				response.setData(token);
+			}
+			// else, password is incorrect
+			else {
+				response.setStatus(CommonResponse.FAIL);
+				response.setMessage("incorrect password"); 
+			}
+		}
+		else {
+			response.setStatus(CommonResponse.FAIL);
+			response.setMessage("user not found"); 
+		}
+		
+		return response; 
 	}
 	
 	public List<User> selectUserListByPage(int pageNum) throws Exception {
@@ -32,7 +66,7 @@ public class UserService implements UserDetailsService{
 
 	public int insertUser(User user) {
 		String rawPassword = user.getPassword(); 
-		String encodedPassword = passwordEncoder.encode(rawPassword); 
+		String encodedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt()); 
 		user.setPassword(encodedPassword);
 
 		return userDAO.insertUser(user);
@@ -43,10 +77,6 @@ public class UserService implements UserDetailsService{
 	}
 
 	public int deleteUser(User user) {
-		String rawPassword = user.getPassword(); 
-		String encodedPassword = passwordEncoder.encode(rawPassword); 
-		user.setPassword(encodedPassword);
-
 		return userDAO.deleteUser(user);
 	}
 }

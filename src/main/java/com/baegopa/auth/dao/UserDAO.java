@@ -15,7 +15,7 @@ public class UserDAO extends AbstractDAO {
 	}
 	
 	public User selectUser(String email) {
-		return (User) select("user.selectUser", email); 
+		return (User) selectOne("user.selectUser", email); 
 	}
 	
 	public int insertUser(User user) {

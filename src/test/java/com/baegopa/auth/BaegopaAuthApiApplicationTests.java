@@ -1,10 +1,9 @@
 package com.baegopa.auth;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -18,11 +17,13 @@ public class BaegopaAuthApiApplicationTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 //	@Test
 //	public void testSelectUser() {
-//		String body = this.restTemplate.getForObject("/users/", String.class);
-//		System.out.println(body);
+//		String email = "example@baegopa.com";
+//		String responseBody = this.restTemplate.getForObject("/users/", String.class, email);
+//		logger.debug(responseBody);
 //	}
 
 //	@Test
@@ -42,13 +43,13 @@ public class BaegopaAuthApiApplicationTests {
 //		this.restTemplate.put("/users/", user);
 //	}
 //	
-	@Test
-	public void testDeleteUser() {
-		Map<String, Object> user = new HashMap<>(); 
-		user.put("email", "example@baegopa.com"); 
-		user.put("password", "mypassword");
-		this.restTemplate.delete("/users/", user);
-	}
+//	@Test
+//	public void testDeleteUser() {
+//		Map<String, Object> user = new HashMap<>(); 
+//		user.put("email", "example@baegopa.com"); 
+//		user.put("password", "mypassword");
+//		this.restTemplate.delete("/users/", user);
+//	}
 	
 
 }

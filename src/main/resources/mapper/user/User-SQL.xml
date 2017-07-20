@@ -6,15 +6,15 @@
 	<select id="selectUser" parameterType="String" resultType="com.baegopa.auth.dto.User">
 		<![CDATA[
 			SELECT
-    			id;
-				email;
-				password; 
-				sns-type; 
-				use_yn;
-				recommended_time; 
-				recommended_yn; 
-				private Timestamp createdAt;
-				private Timestamp updatedAt;
+    			id,
+				email,
+				password,
+				sns_type, 
+				use_yn,
+				recommended_time, 
+				recommended_use_yn,
+				created_at,
+				updated_at
 			FROM
    				users  
    			WHERE
@@ -25,15 +25,15 @@
 	<select id="selectUserListByPage" parameterType="int" resultType="com.baegopa.auth.dto.User">
 		<![CDATA[
 			SELECT
-    			id;
-				email;
-				password; 
-				sns-type; 
-				use_yn;
-				recommended_time; 
-				recommended_yn; 
-				private Timestamp createdAt;
-				private Timestamp updatedAt;
+    			id,
+				email,
+				password,
+				sns_type, 
+				use_yn,
+				recommended_time, 
+				recommended_use_yn,
+				created_at,
+				updated_at
 			FROM
    				users  
    			WHERE
@@ -47,12 +47,15 @@
 	    <![CDATA[
 	        INSERT INTO users
 	        (
-	            id, 
-	            email, 
-	            password, 
-	            use_yn, 
-	            created_at, 
-	            updated_at
+	            id,
+				email,
+				password,
+				sns_type, 
+				use_yn,
+				recommended_time, 
+				recommended_use_yn,
+				created_at,
+				updated_at
 	        )
 	        
 	        VALUES
@@ -60,7 +63,10 @@
 	            #{id},
 	            #{email},
 	            #{password},
+	            #{snsType},
 	            'Y', 
+	            NOW(),
+	            'N',
 	            NOW(),
 	            NOW()
 	        )
@@ -71,9 +77,9 @@
 	    <![CDATA[
 	        UPDATE users
 	        SET
-	            password = #{newPassword} 
+	            password = #{password} 
 	        WHERE
-	            email = #{email} AND password = #{password}   
+	            email = #{email}  
 	    ]]>
 	</update>
 	
@@ -83,7 +89,7 @@
 	        SET
 	            use_yn = 'N'
 	        WHERE
-	            email = #{email} AND password = #{password}   
+	            email = #{email}
 	    ]]>
 	</update>
 	

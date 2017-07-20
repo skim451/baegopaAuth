@@ -1,20 +1,15 @@
 package com.baegopa.auth.dto;
 
 import java.sql.Timestamp;
-import java.util.Collection;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-public class User implements UserDetails {
-	//CustomFields
+public class User  {
 	private Long id;
 	private String email;
 	private String password; 
 	private char snsType; 
 	private char useYn;
 	private Timestamp recommendedTime; 
-	private char recommendedYn; 
+	private char recommendedUseYn; 
 	private String token;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
@@ -68,12 +63,12 @@ public class User implements UserDetails {
 		this.recommendedTime = recommendedTime;
 	}
 
-	public char getRecommendedYn() {
-		return recommendedYn;
+	public char getRecommendedUseYn() {
+		return recommendedUseYn;
 	}
 
 	public void setRecommendedYn(char recommendedYn) {
-		this.recommendedYn = recommendedYn;
+		this.recommendedUseYn = recommendedYn;
 	}
 
 	public Timestamp getAuthedAt() {
@@ -98,42 +93,4 @@ public class User implements UserDetails {
 	public void setToken(String token) {
 		this.token = token;
 	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
 }
