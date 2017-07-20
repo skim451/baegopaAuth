@@ -6,7 +6,7 @@ public class UserAuth {
 	private int id; 
 	private String email; 
 	private String token; 
-	private Timestamp authed_at; 
+	private Timestamp authedAt; 
 	private boolean useYn;
 	
 	public UserAuth () {} 
@@ -24,11 +24,11 @@ public class UserAuth {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public Timestamp getAuthed_at() {
-		return authed_at;
+	public Timestamp getAuthedAt() {
+		return authedAt;
 	}
-	public void setAuthed_at(Timestamp authed_at) {
-		this.authed_at = authed_at;
+	public void setAuthedAt(Timestamp authedAt) {
+		this.authedAt = authedAt;
 	}
 	public int getId() {
 		return id;
