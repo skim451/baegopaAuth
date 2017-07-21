@@ -77,19 +77,21 @@
 	    <![CDATA[
 	        UPDATE users
 	        SET
-	            password = #{password} 
+	            password = #{password} ,
+	            updated_at = NOW()
 	        WHERE
 	            email = #{email}  
 	    ]]>
 	</update>
 	
-	<update id="deleteUser" parameterType="com.baegopa.auth.dto.User"> 
+	<update id="deleteUser" parameterType="String"> 
 		<![CDATA[
 	        UPDATE users
 	        SET
 	            use_yn = 'N'
 	        WHERE
 	            email = #{email}
+	            updated_at = NOW()
 	    ]]>
 	</update>
 	

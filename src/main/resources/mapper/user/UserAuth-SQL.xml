@@ -5,6 +5,16 @@
 <mapper namespace="userAuth">
 	<select id="selectByEmail" parameterType="String" resultType="com.baegopa.auth.dto.UserAuth">
 		<![CDATA[
+			SELECT * 
+			FROM
+   				user_auths
+   			WHERE
+   				email=#{email}
+		]]>
+	</select>
+	
+	<select id="selectByToken" parameterType="String" resultType="com.baegopa.auth.dto.UserAuth">
+		<![CDATA[
 			SELECT
 				id, 
     			email, 
@@ -14,7 +24,7 @@
 			FROM
    				user_auths
    			WHERE
-   				email=#{email}
+   				token=#{token}
 		]]>
 	</select>
 	
@@ -50,7 +60,7 @@
 	    ]]>
 	</update>
 	
-	<update id="delete" parameterType="com.baegopa.auth.dto.UserAuth"> 
+	<update id="delete" parameterType="String"> 
 		<![CDATA[
 	        UPDATE user_auths
 	        SET

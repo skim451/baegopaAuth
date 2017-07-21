@@ -3,17 +3,20 @@ package com.baegopa.auth.dao;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AbstractDAO {
-	
 	@Autowired
     private SqlSessionTemplate sqlSession;
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
    
 	protected void printQueryId(String queryId) {
-//        if(log.isDebugEnabled()){
-//            log.debug("\t QueryId  \t:  " + queryId);
-//        }
+        if(logger.isDebugEnabled()){
+            logger.debug("\t QueryId  \t:  " + queryId);
+        }
     }
      
     public Object insert(String queryId, Object params){

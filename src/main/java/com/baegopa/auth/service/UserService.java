@@ -25,36 +25,45 @@ public class UserService{
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	private void registerToken (String email, String token) {
+		UserAuth auth = new UserAuth();
+		auth.setEmail(email);
+		auth.setToken(BCrypt.hashpw(token, BCrypt.gensalt()));
+		if(userAuthDAO.selectUserAuthByEmail(email) != null) {
+			userAuthDAO.updateUserAuth(auth); 
+		}
+		else {
+			userAuthDAO.insertUserAuth(auth);
+		}
+	}
+	
 	public CommonResponse login(AuthRequest request) {
 		CommonResponse response = new CommonResponse(); 
 		String token;
 		String email = request.getEmail(); 
 		String userPassword = request.getPassword(); 
 		
-		logger.debug("login request for :" + email);
-		
 		User user = userDAO.selectUser(email); 
+		// if user with 'email' is found
 		if(user != null) {
 			String dbPassword = user.getPassword(); 
 			// if password is correct
 			if ( BCrypt.checkpw(userPassword, dbPassword)) {
 				token = AuthenticationToken.generateToken(); 
-				UserAuth auth = new UserAuth();
-				auth.setEmail(email);
-				auth.setToken(BCrypt.hashpw(token, BCrypt.gensalt()));
-				userAuthDAO.insertUserAuth(auth);
+				registerToken(email, token);
 				response.setStatus(CommonResponse.SUCC);
 				response.setData(token);
 			}
-			// else, password is incorrect
+			// else, if password is incorrect
 			else {
 				response.setStatus(CommonResponse.FAIL);
-				response.setMessage("incorrect password"); 
+				response.setMessage(CommonResponse.INVAL_PW); 
 			}
 		}
+		// if user with 'email' is not found. 
 		else {
 			response.setStatus(CommonResponse.FAIL);
-			response.setMessage("user not found"); 
+			response.setMessage(CommonResponse.USR_NOT_FOUND); 
 		}
 		
 		return response; 
@@ -64,19 +73,40 @@ public class UserService{
 		return userDAO.selectUserListByPage(pageNum);
 	}
 
-	public int insertUser(User user) {
-		String rawPassword = user.getPassword(); 
-		String encodedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt()); 
-		user.setPassword(encodedPassword);
+	public CommonResponse insertUser(User user) {
+		CommonResponse response = new CommonResponse(); 
+		
+		String email = user.getEmail(); 
+		User userInDB = userDAO.selectUser(email) ;
+		// If there is no user with 'email', create one. 
+		if (userInDB == null) {
+			String rawPassword = user.getPassword(); 
+			String encodedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt()); 
+			user.setPassword(encodedPassword);
+			
+			int dbSuccess = userDAO.insertUser(user);
+			// insertion success
+			if(dbSuccess == 1) {
+				response.setStatus(CommonResponse.SUCC);
+				response.setMessage(CommonResponse.USR_CREATED);
+			} else {
+				response.setStatus(CommonResponse.FAIL);
+				response.setMessage(CommonResponse.DB_FAIL);
+			}
+		// If there is already an user with 'email', return error. 
+		} else {
+			response.setStatus(CommonResponse.FAIL);
+			response.setMessage(CommonResponse.USR_EXISTS);
+		}
 
-		return userDAO.insertUser(user);
+		return response; 
 	}
 
 	public int updateUser(User user) {
 		return userDAO.updateUser(user);
 	}
 
-	public int deleteUser(User user) {
-		return userDAO.deleteUser(user);
+	public int deleteUser(String email) {
+		return userDAO.deleteUser(email);
 	}
 }

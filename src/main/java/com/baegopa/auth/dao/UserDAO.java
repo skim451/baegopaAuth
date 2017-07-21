@@ -26,7 +26,7 @@ public class UserDAO extends AbstractDAO {
 		return (int) update("user.updateUser", user); 
 	}
 	
-	public int deleteUser(User user) {
-		return (int) update("user.deleteUser", user);
+	public int deleteUser(String email) {
+		return (int) update("user.deleteUser", email);
 	}
 }
