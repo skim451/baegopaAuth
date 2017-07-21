@@ -19,6 +19,7 @@
    				users  
    			WHERE
    				email=#{email}
+   				use_yn='Y'
 		]]>
 	</select>
 	
@@ -43,7 +44,7 @@
 		]]>
 	</select>
 	
-	<insert id="insertUser" parameterType="com.baegopa.auth.dto.User">
+	<insert id="insertUser" parameterType="com.baegopa.auth.dto.User" >
 	    <![CDATA[
 	        INSERT INTO users
 	        (

@@ -16,6 +16,11 @@ import com.baegopa.auth.dto.CommonResponse;
 import com.baegopa.auth.dto.User;
 import com.baegopa.auth.dto.UserAuth;
 
+/**
+ * 
+ * @author kimsehwan
+ *
+ */
 @Service("userService")
 public class UserService{
 	@Autowired
@@ -25,7 +30,14 @@ public class UserService{
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	private void registerToken (String email, String token) {
+	/**
+	 * Helper function that generates a new token and registers it to user_auths table in DB. 
+	 * @param email --> user email
+	 * @return token 
+	 */
+	private String registerToken (String email) {
+		String token = AuthenticationToken.generateToken(); 
+
 		UserAuth auth = new UserAuth();
 		auth.setEmail(email);
 		auth.setToken(BCrypt.hashpw(token, BCrypt.gensalt()));
@@ -35,11 +47,18 @@ public class UserService{
 		else {
 			userAuthDAO.insertUserAuth(auth);
 		}
+		return token; 
 	}
 	
+	/**
+	 * Log-in.
+	 * Checks email/pw and generates token when email/pw are valid. 
+	 * Returns error message when email/pw are invalid. 
+	 * @param request --> email/pw of user who wants to login. 
+	 * @return response --> contains auth token when login succeeds. 
+	 */
 	public CommonResponse login(AuthRequest request) {
 		CommonResponse response = new CommonResponse(); 
-		String token;
 		String email = request.getEmail(); 
 		String userPassword = request.getPassword(); 
 		
@@ -49,8 +68,7 @@ public class UserService{
 			String dbPassword = user.getPassword(); 
 			// if password is correct
 			if ( BCrypt.checkpw(userPassword, dbPassword)) {
-				token = AuthenticationToken.generateToken(); 
-				registerToken(email, token);
+				String token = registerToken(email);
 				response.setStatus(CommonResponse.SUCC);
 				response.setData(token);
 			}
@@ -69,10 +87,50 @@ public class UserService{
 		return response; 
 	}
 	
-	public List<User> selectUserListByPage(int pageNum) throws Exception {
+	/** 
+	 * Log-out.
+	 * Checks if user auth exists in user_auths table, and deactivate it if there is one.
+	 * @param email --> user email 
+	 * @return response 
+	 */
+	public CommonResponse logout(String email) {
+		CommonResponse response = new CommonResponse(); 
+		
+		UserAuth userAuthInDB = userAuthDAO.selectUserAuthByEmail(email) ;
+		// If user found, delete it. 
+		if (userAuthInDB != null) {			
+			int updateResult = userDAO.deleteUser(email);
+			// insertion success
+			if(updateResult > 1) {
+				response.setStatus(CommonResponse.SUCC);
+				response.setMessage(CommonResponse.USR_DEACT);
+			} else {
+				response.setStatus(CommonResponse.FAIL);
+				response.setMessage(CommonResponse.DB_FAIL);
+			}
+		// If user not found, return error message. 
+		} else {
+			response.setStatus(CommonResponse.FAIL);
+			response.setMessage(CommonResponse.USR_NOT_LOGGEDIN);
+		}
+
+		return response; 
+	}
+	
+	/**
+	 * Gets a list of users at page PageNum. 
+	 * @param pageNum --> page number 
+	 * @return user list
+	 */
+	public List<User> selectUserListByPage(int pageNum) {
 		return userDAO.selectUserListByPage(pageNum);
 	}
 
+	/**
+	 * Creates an user and inserts it to DB. 
+	 * @param user --> new user info 
+	 * @return response
+	 */
 	public CommonResponse insertUser(User user) {
 		CommonResponse response = new CommonResponse(); 
 		
@@ -84,9 +142,9 @@ public class UserService{
 			String encodedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt()); 
 			user.setPassword(encodedPassword);
 			
-			int dbSuccess = userDAO.insertUser(user);
+			int insertResult = userDAO.insertUser(user);
 			// insertion success
-			if(dbSuccess == 1) {
+			if(insertResult > 1) {
 				response.setStatus(CommonResponse.SUCC);
 				response.setMessage(CommonResponse.USR_CREATED);
 			} else {
@@ -102,11 +160,66 @@ public class UserService{
 		return response; 
 	}
 
-	public int updateUser(User user) {
-		return userDAO.updateUser(user);
+	/**
+	 * Updates an user info. ( Change password, etc.) 
+	 * @param user --> new user info 
+	 * @return response
+	 */
+	public CommonResponse updateUser(User user) {
+		CommonResponse response = new CommonResponse(); 
+		
+		String email = user.getEmail(); 
+		User userInDB = userDAO.selectUser(email) ;
+		// If user found, update it. 
+		if (userInDB != null) {
+			String rawPassword = user.getPassword(); 
+			String encodedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt()); 
+			user.setPassword(encodedPassword);
+			
+			int updateResult = userDAO.updateUser(user);
+			// insertion success
+			if(updateResult > 1) {
+				response.setStatus(CommonResponse.SUCC);
+				response.setMessage(CommonResponse.USR_UPDATED);
+			} else {
+				response.setStatus(CommonResponse.FAIL);
+				response.setMessage(CommonResponse.DB_FAIL);
+			}
+		// If user not found, return error message. 
+		} else {
+			response.setStatus(CommonResponse.FAIL);
+			response.setMessage(CommonResponse.USR_DNE);
+		}
+
+		return response; 
 	}
 
-	public int deleteUser(String email) {
-		return userDAO.deleteUser(email);
+	/**
+	 * Deactivates an user.
+	 * @param email --> user to be deactivated.
+	 * @return response
+	 */
+	public CommonResponse deleteUser(String email) {
+		CommonResponse response = new CommonResponse(); 
+		
+		User userInDB = userDAO.selectUser(email) ;
+		// If user found, delete it. 
+		if (userInDB != null) {			
+			int updateResult = userDAO.deleteUser(email);
+			// insertion success
+			if(updateResult > 1) {
+				response.setStatus(CommonResponse.SUCC);
+				response.setMessage(CommonResponse.USR_DEACT);
+			} else {
+				response.setStatus(CommonResponse.FAIL);
+				response.setMessage(CommonResponse.DB_FAIL);
+			}
+		// If user not found, return error message. 
+		} else {
+			response.setStatus(CommonResponse.FAIL);
+			response.setMessage(CommonResponse.USR_DNE);
+		}
+
+		return response; 
 	}
 }
