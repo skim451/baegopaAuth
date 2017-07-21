@@ -1,5 +1,7 @@
 package com.baegopa.auth.interceptor;
 
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,10 +12,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.baegopa.auth.common.BCrypt;
+import com.baegopa.auth.common.InvalidTokenException;
 import com.baegopa.auth.dao.UserAuthDAO;
 import com.baegopa.auth.dto.UserAuth;
-import java.util.StringTokenizer;
 
+/**
+ * 
+ * @author kimsehwan
+ *
+ */
 @Component
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 
@@ -26,6 +33,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String method = request.getMethod();
+		
 		// We don't need an interceptor for GET or POST request.
 		// Auth check is only needed for PUT (update) or DELETE requests. 
 		if(method.equals("GET") || method.equals("POST")) {
@@ -61,16 +69,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				return super.preHandle(request, response, handler);
 			}
 			logger.debug(" invalid token " );
-			return false; 
+			throw new InvalidTokenException();
 		}
 		catch (Exception e) {
 			if(logger.isDebugEnabled()) {
-				logger.debug(" got an exception. " + e.getMessage());
+				logger.debug(" got an exception. " );
+				e.printStackTrace();
 			}
-			return false; 
-		}
-		 
-		
+			throw new InvalidTokenException(); 
+		}	
 	}
-	
 }

@@ -9,6 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.baegopa.auth.interceptor.AuthInterceptor;
 import com.baegopa.auth.interceptor.LoggerInterceptor;
 
+/**
+ * 
+ * @author kimsehwan
+ *
+ */
 @Configuration
 @EnableWebMvc
 public class InterceptorConfig extends WebMvcConfigurerAdapter {

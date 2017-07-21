@@ -5,12 +5,17 @@
 <mapper namespace="userAuth">
 	<select id="selectByEmail" parameterType="String" resultType="com.baegopa.auth.dto.UserAuth">
 		<![CDATA[
-			SELECT * 
+			SELECT 
+				id, 
+    			email, 
+    			token, 
+    			authed_at,
+    			use_yn
 			FROM
    				user_auths
    			WHERE
-   				email=#{email}
-   				use
+   				email=#{email} AND
+   				use_yn=TRUE
 		]]>
 	</select>
 	
@@ -25,7 +30,7 @@
 			FROM
    				user_auths
    			WHERE
-   				token=#{token}
+   				token=#{token} AND
    				use_yn=TRUE
 		]]>
 	</select>

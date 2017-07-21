@@ -11,6 +11,7 @@ public class CommonResponse {
 	public static final String USR_EXISTS = "user already exists.";
 	public static final String USR_DEACT = "user deactivated.";
 	public static final String USR_DNE = "user does not exists.";
+	public static final String INVAL_TOKEN = "auth_token is invalid.";
 	public static final String INVAL_PW = "incorrect password";
 	public static final String DB_FAIL = "database error";
 	
