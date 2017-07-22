@@ -50,19 +50,16 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			while(tokenizer.hasMoreTokens()) {
 				email = tokenizer.nextToken();
 			}
+			// change to header param 
 			String userToken = (String) request.getSession().getAttribute("token");
-			if (logger.isDebugEnabled()) {
-				logger.debug(" checking auth token... ");
-				logger.debug(" email: " + email);
-				logger.debug(" token: " + userToken);
-			}
+			logger.debug(" checking auth token... Email: " + email + " ,  token: " + userToken);
 			UserAuth userAuth = userAuthDAO.selectUserAuthByEmail(email);
-			if (logger.isDebugEnabled()) {
-				if(userAuth == null) 
-					logger.debug(" auth info is not found for " + email);
-				else
-					logger.debug(" auth token for " + email + " is " + userAuth.getToken() );
-			}
+		
+			if(userAuth == null) 
+				logger.debug(" auth info is not found for " + email);
+			else
+				logger.debug(" auth token for " + email + " is " + userAuth.getToken() );
+		
 			String dbToken = userAuth.getToken();
 			if( BCrypt.checkpw(userToken, dbToken)) {
 				logger.debug(" valid token " );
