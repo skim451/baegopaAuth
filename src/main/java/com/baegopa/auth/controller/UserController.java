@@ -1,6 +1,7 @@
 package com.baegopa.auth.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baegopa.auth.dto.AuthRequest;
 import com.baegopa.auth.dto.CommonResponse;
-import com.baegopa.auth.dto.User;
 import com.baegopa.auth.service.UserService;
 
 /**
@@ -29,54 +29,60 @@ public class UserController {
     private UserService userService;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+//	@RequestMapping(value="/test/{id}", method=RequestMethod.GET) 
+//	public User typeTest(@PathVariable long id) {
+//		Map<String, Object> map = userService.typeTest(id);
+//		Set<String> keySet = map.keySet(); 
+//		for(String key : keySet) {
+//			logger.debug( key + ": " + map.get(key).getClass());
+//		}
+//		return map; 
+//	}
+	
 	@RequestMapping(value="/auths", method=RequestMethod.POST) 
 	public CommonResponse login (@RequestBody AuthRequest request) {
-		
 		logger.debug("Login Request For: " + request.getEmail());			
 		
 		CommonResponse response = userService.login(request); 
 		
 		return response; 
 	}
+	
 	@RequestMapping (value="/auths", method=RequestMethod.DELETE)
-	public CommonResponse logout (@RequestParam String email){
-		return userService.logout(email);
+	public CommonResponse logout (@RequestParam int id){
+		return userService.logout(id);
 	}
 	
-	@RequestMapping(value="/pages", method=RequestMethod.GET)
-	public List<User> selectUserListByPage(@RequestParam int pageNum) {
-		if(logger.isDebugEnabled()) {
-			logger.debug(" list user :" + pageNum);
-		}
-		List<User> userList = userService.selectUserListByPage(pageNum);
+	@RequestMapping(value="/{pageNum}", method=RequestMethod.GET)
+	public List<Map<String, Object>> selectUserListByPage(@PathVariable int pageNum) {
+		logger.debug(" list user :" + pageNum);
+		
+		List<Map<String, Object>> userList = userService.selectUserListByPage(pageNum);
 		return userList;
  	}
 
 	@RequestMapping(value="", method=RequestMethod.POST)
-	public CommonResponse insert(@RequestBody User user) {
+	public CommonResponse insert(@RequestBody Map<String, Object> user) {
 		if(logger.isDebugEnabled()) {
-			logger.debug(" insert :" + user.getEmail()); 
+			logger.debug(" insert :" + user.get("email")); 
 		}
 		CommonResponse response = userService.insertUser(user); 
 		return response;
 	}
 	
-	// email -> id 
-	@RequestMapping(value="/{email}", method=RequestMethod.PUT) 
-	public CommonResponse update(@PathVariable String email, @RequestBody User user) {
-		if(logger.isDebugEnabled()) {
-			logger.debug(" update :" + user.getEmail()); 
-		}
-		user.setEmail(email);
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT) 
+	public CommonResponse update(@PathVariable long id, @RequestBody Map<String, Object> user) {
+		logger.debug(" update :" + user.get("email")); 
+	
+		user.put("id", id);
 		return userService.updateUser(user); 
 	}
 	
-	// email -> id 
-	@RequestMapping(value="/{email}", method=RequestMethod.DELETE) 
-	public CommonResponse delete(@PathVariable String email) {
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) 
+	public CommonResponse delete(@PathVariable long id) {
 		if(logger.isDebugEnabled()) {
-			logger.debug(" delete :" + email); 
+			logger.debug(" delete :" + id); 
 		}
-		return userService.deleteUser(email);
+		return userService.deleteUser(id);
 	}
 }

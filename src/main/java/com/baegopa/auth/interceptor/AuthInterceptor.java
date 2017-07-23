@@ -1,5 +1,6 @@
 package com.baegopa.auth.interceptor;
 
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +14,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.baegopa.auth.common.BCrypt;
 import com.baegopa.auth.common.InvalidTokenException;
-import com.baegopa.auth.dao.UserAuthDAO;
-import com.baegopa.auth.dto.UserAuth;
+import com.baegopa.auth.mapper.UserMapper;
 
 /**
  * 
@@ -25,17 +25,16 @@ import com.baegopa.auth.dto.UserAuth;
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
-	UserAuthDAO userAuthDAO; 
+	UserMapper userMapper; 
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
 		String method = request.getMethod();
 		
-		// We don't need an interceptor for GET or POST request.
-		// Auth check is only needed for PUT (update) or DELETE requests. 
 		if(method.equals("GET") || method.equals("POST")) {
 			if(logger.isDebugEnabled()) {
 				logger.debug("   skip auth interceptor   " );
@@ -46,21 +45,17 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		try {
 			String requestURI = request.getRequestURI();
 			StringTokenizer tokenizer = new StringTokenizer(requestURI, "/"); 
-			String email = ""; 
+			String temp = "0"; 
 			while(tokenizer.hasMoreTokens()) {
-				email = tokenizer.nextToken();
+				temp = tokenizer.nextToken();
 			}
-			// change to header param 
-			String userToken = (String) request.getSession().getAttribute("token");
-			logger.debug(" checking auth token... Email: " + email + " ,  token: " + userToken);
-			UserAuth userAuth = userAuthDAO.selectUserAuthByEmail(email);
+			long id = Long.parseLong(temp);
+			String userToken = (String) request.getHeader("token");
+			logger.debug(" checking auth token... id: " + id + " ,  token: " + userToken);
+			
+			Map<String, Object> user = userMapper.selectById(id);
 		
-			if(userAuth == null) 
-				logger.debug(" auth info is not found for " + email);
-			else
-				logger.debug(" auth token for " + email + " is " + userAuth.getToken() );
-		
-			String dbToken = userAuth.getToken();
+			String dbToken = (String) user.get("token");
 			if( BCrypt.checkpw(userToken, dbToken)) {
 				logger.debug(" valid token " );
 				return super.preHandle(request, response, handler);

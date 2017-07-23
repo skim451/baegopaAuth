@@ -1,19 +1,22 @@
 package com.baegopa.auth.dto;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 public class User  {
 	private Long id;
 	private String email;
 	private String password; 
-	private char snsType; 
-	private char useYn;
-	private Timestamp recommendedTime; 
-	private char recommendedUseYn; 
-	private String token;
+	private String name; 
+	private String snsType; 
+	private String useYn;
+	private Time recommendedTime; 
+	private String recommendedUseYn; 
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 	private Timestamp authedAt;
+	private String token;
+	private String tokenYn; 
 	
 	public User() { } 
 	
@@ -35,40 +38,76 @@ public class User  {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-	public Timestamp getUpdatedAt() {
-		return updatedAt;
-	}
-	public void setUpdatedAt(Timestamp updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	public char getSnsType() {
-		return snsType;
+
+	public String getToken() {
+		return token;
 	}
 
-	public void setSnsType(char snsType) {
-		this.snsType = snsType;
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public String getName() {
+		return name;
 	}
 
-	public Timestamp getRecommendedTime() {
-		return recommendedTime;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setRecommendedTime(Timestamp recommendedTime) {
-		this.recommendedTime = recommendedTime;
+	public String getUseYn() {
+		return useYn;
 	}
 
-	public char getRecommendedUseYn() {
+	public void setUseYn(String useYn) {
+		this.useYn = useYn;
+	}
+
+	public String getRecommendedUseYn() {
 		return recommendedUseYn;
 	}
 
-	public void setRecommendedYn(char recommendedYn) {
-		this.recommendedUseYn = recommendedYn;
+	public void setRecommendedUseYn(String recommendedUseYn) {
+		this.recommendedUseYn = recommendedUseYn;
+	}
+
+	public String getTokenYn() {
+		return tokenYn;
+	}
+
+	public void setTokenYn(String tokenYn) {
+		this.tokenYn = tokenYn;
+	}
+
+	public void setSnsType(String snsType) {
+		this.snsType = snsType;
+	}
+
+	public String getSnsType() {
+		return snsType;
+	}
+
+	public Time getRecommendedTime() {
+		return recommendedTime;
+	}
+
+	public void setRecommendedTime(Time recommendedTime) {
+		this.recommendedTime = recommendedTime;
+	}
+
+	public Timestamp getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Timestamp getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Timestamp updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public Timestamp getAuthedAt() {
@@ -79,18 +118,5 @@ public class User  {
 		this.authedAt = authedAt;
 	}
 
-	public void setUseYn(char useYn) {
-		this.useYn = useYn;
-	}
-
-	public char getUseYn() {
-		return useYn;
-	}
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
 }
+
