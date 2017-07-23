@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baegopa.auth.dto.AuthRequest;
 import com.baegopa.auth.dto.CommonResponse;
 import com.baegopa.auth.service.UserService;
 
@@ -40,8 +39,8 @@ public class UserController {
 //	}
 	
 	@RequestMapping(value="/auths", method=RequestMethod.POST) 
-	public CommonResponse login (@RequestBody AuthRequest request) {
-		logger.debug("Login Request For: " + request.getEmail());			
+	public CommonResponse login (@RequestBody Map<String, Object> request) {
+		logger.debug("Login Request For: " + request.get("email"));			
 		
 		CommonResponse response = userService.login(request); 
 		

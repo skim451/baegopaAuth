@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baegopa.auth.common.AuthenticationToken;
 import com.baegopa.auth.common.BCrypt;
-import com.baegopa.auth.dto.AuthRequest;
 import com.baegopa.auth.dto.CommonResponse;
 import com.baegopa.auth.mapper.UserMapper;
 
@@ -33,10 +32,10 @@ public class UserService{
 //	}
 	
 	@Transactional
-	public CommonResponse login(AuthRequest request) {
+	public CommonResponse login(Map<String, Object> request) {
 		CommonResponse response = new CommonResponse(); 
-		String email = request.getEmail(); 
-		String userPassword = request.getPassword(); 
+		String email = (String) request.get("email"); 
+		String userPassword = (String) request.get("password"); 
 		
 		Map<String, Object> user = userMapper.selectByEmail(email); 
 		if(user != null) {
