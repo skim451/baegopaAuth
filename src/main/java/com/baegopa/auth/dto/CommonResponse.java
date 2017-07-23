@@ -29,18 +29,18 @@ public class CommonResponse {
 	}
 	
 	public CommonResponse fail(String msg){
-        this.status = "fail";
+        this.status = FAIL;
         this.message = msg;
         return this;
     }
 
     public CommonResponse success(){
-        this.status = "success";
+        this.status = SUCC;
         return this;
     }
 
     public CommonResponse success(Object data){
-        this.status = "success";
+        this.status = SUCC;
         this.data = data;
         return this;
     }
