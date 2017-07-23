@@ -4,7 +4,7 @@
 
 <mapper namespace="com.baegopa.auth.mapper.UserMapper">
 
-	<select id="selectByEmail" parameterType="String" resultType="com.baegopa.auth.dto.User">
+	<select id="selectByEmail" parameterType="String" resultType="HashMap">
 		<![CDATA[
 			SELECT * 
 			FROM
@@ -72,7 +72,7 @@
 	    ]]>
 	</insert>
 	
-	<update id="update" parameterType="com.baegopa.auth.dto.User">
+	<update id="update" parameterType="HashMap">
 	    <![CDATA[
 	        UPDATE users
 	        SET

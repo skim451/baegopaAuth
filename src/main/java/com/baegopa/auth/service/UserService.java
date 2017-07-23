@@ -1,5 +1,6 @@
 package com.baegopa.auth.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,10 +43,16 @@ public class UserService{
 			String dbPassword = (String) user.get("password"); 
 			if ( BCrypt.checkpw(userPassword, dbPassword)) {
 				String token = AuthenticationToken.generateToken();
-				user.put("token", token); 
-				userMapper.updateToken(user);
-				response.setStatus(CommonResponse.SUCC);
+				String encodedToken = BCrypt.hashpw(token, BCrypt.gensalt());
+				
+				Map<String, Object> userToken = new HashMap<>();
+				userToken.put("id", user.get("id")); 
+				userToken.put("token", encodedToken); 
+				userMapper.updateToken(userToken);
+				
+				user.put("token", token);
 				response.setData(user);
+				response.setStatus(CommonResponse.SUCC);
 			}
 			else {
 				response.setStatus(CommonResponse.FAIL);
