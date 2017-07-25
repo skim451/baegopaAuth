@@ -28,16 +28,6 @@ public class UserController {
     private UserService userService;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-//	@RequestMapping(value="/test/{id}", method=RequestMethod.GET) 
-//	public User typeTest(@PathVariable long id) {
-//		Map<String, Object> map = userService.typeTest(id);
-//		Set<String> keySet = map.keySet(); 
-//		for(String key : keySet) {
-//			logger.debug( key + ": " + map.get(key).getClass());
-//		}
-//		return map; 
-//	}
-	
 	@RequestMapping(value="/auths", method=RequestMethod.POST) 
 	public CommonResponse login (@RequestBody Map<String, Object> request) {
 		logger.debug("Login Request For: " + request.get("email"));			
@@ -62,9 +52,8 @@ public class UserController {
 
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public CommonResponse insert(@RequestBody Map<String, Object> user) {
-		if(logger.isDebugEnabled()) {
-			logger.debug(" insert :" + user.get("email")); 
-		}
+		logger.debug(" insert :" + user.get("email")); 
+		
 		CommonResponse response = userService.insertUser(user); 
 		return response;
 	}
@@ -79,9 +68,8 @@ public class UserController {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) 
 	public CommonResponse delete(@PathVariable long id) {
-		if(logger.isDebugEnabled()) {
-			logger.debug(" delete :" + id); 
-		}
+		logger.debug(" delete :" + id); 
+		
 		return userService.deleteUser(id);
 	}
 }
