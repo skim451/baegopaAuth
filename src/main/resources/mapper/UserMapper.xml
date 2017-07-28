@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baegopa.auth.mapper.UserMapper">
+
+	<select id="selectByEmail" parameterType="String" resultType="HashMap">
+		<![CDATA[
+			SELECT * 
+			FROM
+   				users  
+   			WHERE
+   				email=#{email} AND
+   				use_yn='Y'
+		]]>
+	</select>
+	
+	<select id="selectById" parameterType="long" resultType="HashMap">
+		<![CDATA[
+			SELECT * 
+			FROM
+   				users  
+   			WHERE
+   				id=#{id} AND
+   				use_yn='Y'
+		]]>
+	</select>
+	
+	<select id="selectListByPage" parameterType="int" resultType="HashMap">
+		<![CDATA[
+			SELECT * 
+			FROM
+   				users  
+   			WHERE
+   				id >= #{pageNum} * 25 AND
+   				id <  (#{pageNum}+1) * 25
+			ORDER BY id ASC
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="HashMap" >
+	    <![CDATA[
+	        INSERT INTO users
+	        (
+	            id,
+				email,
+				password,
+				sns_type,
+				name,  
+				use_yn,
+				recommended_time, 
+				recommended_use_yn,
+				created_at,
+				updated_at, 
+				token, 
+				token_yn
+	        )
+	        
+	        VALUES
+	        (
+	            #{id},
+	            #{email},
+	            #{password},
+	            #{snsType},
+	            #{name},
+	            'Y', 
+	            NOW(),
+	            'N',
+	            NOW(),
+	            NOW(), 
+	            '0', 
+	            'N'
+	        )
+	    ]]>
+	</insert>
+	
+	<update id="update" parameterType="HashMap">
+	    <![CDATA[
+	        UPDATE users
+	        SET
+	       		email = #{email},
+	            password = #{password},
+	            name = #{name}, 
+	            sns_type = #{snsType}, 
+	            updated_at = NOW()
+	        WHERE
+	            id = #{id} AND 
+	            use_yn = 'Y' 
+	    ]]>
+	</update>
+	
+	<update id="updateToken" parameterType="HashMap">
+	    <![CDATA[
+	        UPDATE users
+	        SET
+				token = #{token},
+				token_yn = 'Y', 
+	            updated_at = NOW()
+	        WHERE
+	            id = #{id} AND 
+	            use_yn = 'Y' 
+	    ]]>
+	</update>
+	
+	<update id="delete" parameterType="long"> 
+		<![CDATA[
+	        UPDATE users
+	        SET
+	            use_yn = 'N', 
+	            updated_at = NOW()
+	        WHERE
+	            id = #{id}
+	    ]]>
+	</update>
+	
+	<update id="deleteToken" parameterType="long"> 
+		<![CDATA[
+	        UPDATE users
+	        SET
+	            token_yn = 'N', 
+	            updated_at = NOW()
+	        WHERE
+	            id = #{id}
+	    ]]>
+	</update>
+	
+</mapper>
+

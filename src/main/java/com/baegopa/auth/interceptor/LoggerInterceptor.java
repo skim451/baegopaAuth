@@ -9,6 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+/**
+ * 
+ * @author kimsehwan
+ *
+ */
 @Component
 public class LoggerInterceptor extends HandlerInterceptorAdapter {
 
@@ -23,7 +28,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		if (logger.isDebugEnabled()) {
 			logger.debug("========================= START ============================");
 			logger.debug(" Request URI \t: " + request.getRequestURI());
-			logger.debug(" Request METHOD \t:" + request.getMethod());
+			logger.debug(" Request METHOD \t: " + request.getMethod());
 		}
 		
 		return super.preHandle(request, response, handler);
