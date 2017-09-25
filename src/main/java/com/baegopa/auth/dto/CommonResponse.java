@@ -23,8 +23,6 @@ public class CommonResponse {
 	private String status; 
 	private String message; 
 	private Object data;
-
-	public String hi = "hi";
 	
 	public CommonResponse() {
 		
