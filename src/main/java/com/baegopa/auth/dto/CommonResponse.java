@@ -24,9 +24,9 @@ public class CommonResponse {
 	private String message; 
 	private Object data;
 	
-	public String hello = "hello"; 
+	public String hello = "hello2"; 
 
-	
+
 	public CommonResponse() {
 		
 	}
